@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://music/outro.ogg" type="AudioStream" id=1]
 [ext_resource path="res://menu/cutscenes/night.png" type="Texture" id=2]
 [ext_resource path="res://menu/cutscenes/pirate_night.png" type="Texture" id=3]
 [ext_resource path="res://menu/cutscenes/Outro.gd" type="Script" id=4]
+[ext_resource path="res://menu/cutscenes/accept.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "waves"
@@ -83,6 +84,47 @@ tracks/3/keys = {
 "values": [ Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "go"
+tracks/0/type = "audio"
+tracks/0/path = NodePath("Go/Sound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Background:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.431373, 0.937255, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Background/Skip:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0.384314, 0.313726, 0.72549, 1 ), Color( 1, 1, 1, 1 ), Color( 0.384314, 0.313726, 0.72549, 1 ), Color( 1, 1, 1, 1 ), Color( 0.384314, 0.313726, 0.72549, 1 ) ]
+}
+
 [node name="Intro" type="Node2D"]
 script = ExtResource( 4 )
 
@@ -91,7 +133,6 @@ stream = ExtResource( 1 )
 bus = "music"
 
 [node name="Background" type="Sprite" parent="."]
-self_modulate = Color( 0.0705882, 0.207843, 0.356863, 0 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 centered = false
@@ -104,6 +145,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = 160.0
+text = "\"Why did you turn off the light?\""
 align = 1
 autowrap = true
 __meta__ = {
@@ -131,4 +173,10 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "cutscene"
 anims/cutscene = SubResource( 2 )
+
+[node name="Go" type="AnimationPlayer" parent="."]
+anims/go = SubResource( 3 )
+
+[node name="Sound" type="AudioStreamPlayer" parent="Go"]
+stream = ExtResource( 5 )
 [connection signal="pressed" from="Background/Skip" to="." method="_on_Skip_pressed"]

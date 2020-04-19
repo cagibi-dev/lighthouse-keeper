@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://music/intro.ogg" type="AudioStream" id=1]
 [ext_resource path="res://menu/cutscenes/sunset_character.png" type="Texture" id=2]
 [ext_resource path="res://menu/cutscenes/sunset.png" type="Texture" id=3]
 [ext_resource path="res://menu/cutscenes/pirates.png" type="Texture" id=4]
 [ext_resource path="res://menu/cutscenes/Intro.gd" type="Script" id=5]
+[ext_resource path="res://menu/cutscenes/accept.wav" type="AudioStream" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "waves"
@@ -97,6 +98,48 @@ tracks/4/keys = {
 "values": [ "> Click here to skip <", "> Click here to start <" ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "go"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -300 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("Go/Sound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Background/Skip:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.647059, 0.352941, 0.0823529, 1 ), Color( 1, 1, 1, 1 ), Color( 0.647059, 0.352941, 0.0823529, 0 ) ]
+}
+
 [node name="Intro" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -104,8 +147,10 @@ script = ExtResource( 5 )
 stream = ExtResource( 1 )
 bus = "music"
 
+[node name="FadeTween" type="Tween" parent="Music"]
+
 [node name="Background" type="Sprite" parent="."]
-self_modulate = Color( 0.0705882, 0.207843, 0.356863, 0 )
+position = Vector2( 0, -300 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
@@ -129,7 +174,7 @@ autoplay = "waves"
 anims/waves = SubResource( 1 )
 
 [node name="Skip" type="Button" parent="Background"]
-modulate = Color( 0.647059, 0.352941, 0.0823529, 1 )
+modulate = Color( 0.647059, 0.352941, 0.0823529, 0 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -145,4 +190,11 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "cutscene"
 anims/cutscene = SubResource( 2 )
+
+[node name="Go" type="AnimationPlayer" parent="."]
+anims/go = SubResource( 3 )
+
+[node name="Sound" type="AudioStreamPlayer" parent="Go"]
+stream = ExtResource( 6 )
+bus = "sfx"
 [connection signal="pressed" from="Background/Skip" to="." method="_on_Skip_pressed"]

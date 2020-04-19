@@ -5,4 +5,7 @@ func _input(event):
 		_on_Skip_pressed()
 
 func _on_Skip_pressed():
+	$Go.play("go")
+	$Music.stop()
+	yield(get_tree().create_timer(1.0), "timeout")
 	get_tree().change_scene("res://menu/TitleScreen.tscn")

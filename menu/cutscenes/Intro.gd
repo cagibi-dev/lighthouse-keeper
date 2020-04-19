@@ -5,4 +5,9 @@ func _input(event):
 		_on_Skip_pressed()
 
 func _on_Skip_pressed():
+	$Music/FadeTween.interpolate_property($Music, "volume_db", -3, -60, 1.0, Tween.TRANS_EXPO)
+	$Music/FadeTween.start()
+	$Background/Waves.stop()
+	$Go.play("go")
+	yield(get_tree().create_timer(1.0), "timeout")
 	get_tree().change_scene("res://world/World.tscn")
