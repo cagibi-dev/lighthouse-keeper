@@ -150,7 +150,6 @@ bus = "music"
 [node name="FadeTween" type="Tween" parent="Music"]
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 0, -300 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 centered = false
@@ -174,7 +173,7 @@ autoplay = "waves"
 anims/waves = SubResource( 1 )
 
 [node name="Skip" type="Button" parent="Background"]
-modulate = Color( 0.647059, 0.352941, 0.0823529, 0 )
+modulate = Color( 0.647059, 0.352941, 0.0823529, 1 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0

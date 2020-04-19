@@ -179,4 +179,5 @@ anims/go = SubResource( 3 )
 
 [node name="Sound" type="AudioStreamPlayer" parent="Go"]
 stream = ExtResource( 5 )
+bus = "sfx"
 [connection signal="pressed" from="Background/Skip" to="." method="_on_Skip_pressed"]
