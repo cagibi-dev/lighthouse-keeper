@@ -1,0 +1,148 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://music/intro.ogg" type="AudioStream" id=1]
+[ext_resource path="res://menu/cutscenes/sunset_character.png" type="Texture" id=2]
+[ext_resource path="res://menu/cutscenes/sunset.png" type="Texture" id=3]
+[ext_resource path="res://menu/cutscenes/pirates.png" type="Texture" id=4]
+[ext_resource path="res://menu/cutscenes/Intro.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "waves"
+length = 3.0
+loop = true
+step = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -5 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 20.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 5.5, 9, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "", "You live in a lighthouse.", "You live in a lighthouse.
+
+The only one in the ocean.", "You live in a lighthouse.
+
+The only one in the ocean.
+
+Each night, shadow pirates come to turn it off... will they succeed this time?
+", "Good luck." ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Background:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5.5, 10 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("Music")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 1 )
+} ],
+"times": PoolRealArray( 2 )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Background:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5, 5, 5.5, 6, 9, 10, 11, 17.5, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Background/Skip:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "> Click here to skip <", "> Click here to start <" ]
+}
+
+[node name="Intro" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "music"
+
+[node name="Background" type="Sprite" parent="."]
+self_modulate = Color( 0.0705882, 0.207843, 0.356863, 0 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 0, -5 )
+
+[node name="Label" type="Label" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = 160.0
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Waves" type="AnimationPlayer" parent="Background"]
+autoplay = "waves"
+anims/waves = SubResource( 1 )
+
+[node name="Skip" type="Button" parent="Background"]
+modulate = Color( 0.647059, 0.352941, 0.0823529, 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -13.0
+margin_right = -10.0
+margin_bottom = -5.0
+text = "> Click here to skip <"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "cutscene"
+anims/cutscene = SubResource( 2 )
+[connection signal="pressed" from="Background/Skip" to="." method="_on_Skip_pressed"]

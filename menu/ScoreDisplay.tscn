@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://menu/score.png" type="Texture" id=1]
+[ext_resource path="res://menu/numbers.png" type="Texture" id=2]
+[ext_resource path="res://menu/ScoreDisplay.gd" type="Script" id=3]
+
+[node name="ScoreDisplay" type="Sprite"]
+self_modulate = Color( 1, 1, 1, 0.756863 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Number0" type="Sprite" parent="."]
+position = Vector2( -50, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number1" type="Sprite" parent="."]
+position = Vector2( -36, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number2" type="Sprite" parent="."]
+position = Vector2( -22, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number3" type="Sprite" parent="."]
+position = Vector2( -8, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number4" type="Sprite" parent="."]
+position = Vector2( 6, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number5" type="Sprite" parent="."]
+position = Vector2( 20, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number6" type="Sprite" parent="."]
+position = Vector2( 34, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5
+
+[node name="Number7" type="Sprite" parent="."]
+position = Vector2( 48, 2 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 5

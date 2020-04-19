@@ -1,0 +1,301 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://lighthouse/LightHouse.tscn" type="PackedScene" id=2]
+[ext_resource path="res://world/sea.png" type="Texture" id=3]
+[ext_resource path="res://world/World.gd" type="Script" id=4]
+[ext_resource path="res://world/Current.tscn" type="PackedScene" id=5]
+[ext_resource path="res://menu/gameover.png" type="Texture" id=6]
+[ext_resource path="res://world/sea3.png" type="Texture" id=7]
+[ext_resource path="res://world/sea2.png" type="Texture" id=8]
+[ext_resource path="res://menu/CustomButton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://music/level.ogg" type="AudioStream" id=10]
+[ext_resource path="res://menu/ScoreDisplay.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Animation" id=1]
+resource_name = "screen_shake"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.2, -0.2, 0.1, -0.1, 0.0 ]
+}
+
+[sub_resource type="AnimatedTexture" id=2]
+flags = 2
+frames = 3
+frame_0/texture = ExtResource( 3 )
+frame_1/texture = ExtResource( 8 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 7 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "tides"
+length = 8.0
+loop = true
+step = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 10 ), Vector2( 5, 0 ), Vector2( 5, 10 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "start"
+length = 10.0
+step = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 6, 8, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.878431, 0.411765, 0, 1 ), Color( 0.407843, 0.0627451, 0.247059, 1 ), Color( 0.109804, 0.0470588, 0.333333, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 20, 400 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 600, 20 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "gameover"
+length = 3.0
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Darkness:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 0.1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "goto_outro"
+} ]
+}
+
+[node name="World" type="YSort"]
+position = Vector2( 256, 144 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 80 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 3, 3 )
+current = true
+smoothing_enabled = true
+offset_h = 0.1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Shake" type="AnimationPlayer" parent="Camera2D"]
+anims/screen_shake = SubResource( 1 )
+
+[node name="LightHouse" parent="." instance=ExtResource( 2 )]
+
+[node name="Sea" type="Sprite" parent="."]
+position = Vector2( -400, -300 )
+z_index = -10
+texture = SubResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 800, 600 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sea"]
+autoplay = "tides"
+anims/tides = SubResource( 3 )
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Start" type="AnimationPlayer" parent="Darkness"]
+autoplay = "start"
+anims/start = SubResource( 4 )
+
+[node name="Borders" type="StaticBody2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Left" type="CollisionShape2D" parent="Borders"]
+position = Vector2( -422, 0 )
+shape = SubResource( 5 )
+
+[node name="Right" type="CollisionShape2D" parent="Borders"]
+position = Vector2( 422, 0 )
+shape = SubResource( 5 )
+
+[node name="Top" type="CollisionShape2D" parent="Borders"]
+position = Vector2( 0, -250 )
+shape = SubResource( 6 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Borders"]
+position = Vector2( 0, 250 )
+shape = SubResource( 6 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="GameOver" type="Sprite" parent="HUD"]
+visible = false
+position = Vector2( 256, 144 )
+texture = ExtResource( 6 )
+
+[node name="UI" type="VBoxContainer" parent="HUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreDisplay" parent="HUD/UI" instance=ExtResource( 11 )]
+position = Vector2( 54, 3 )
+
+[node name="Instructions" type="Label" parent="HUD/UI"]
+margin_top = 249.0
+margin_right = 492.0
+margin_bottom = 268.0
+size_flags_vertical = 10
+text = "Mouse: move
+Left click: shoot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverAnim" type="AnimationPlayer" parent="HUD"]
+anims/gameover = SubResource( 7 )
+
+[node name="PirateSpawner" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="Current" parent="." instance=ExtResource( 5 )]
+position = Vector2( 128, 112 )
+scale = Vector2( -1, 1 )
+
+[node name="Current2" parent="." instance=ExtResource( 5 )]
+position = Vector2( -128, -144 )
+
+[node name="Pause" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="Control" parent="Pause"]
+pause_mode = 2
+visible = false
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -56.0
+margin_right = 64.0
+margin_bottom = 56.0
+
+[node name="Rows" type="VBoxContainer" parent="Pause/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Pause/Menu/Rows"]
+margin_top = 7.0
+margin_right = 128.0
+margin_bottom = 21.0
+text = "GAME PAUSED"
+align = 1
+
+[node name="Resume" parent="Pause/Menu/Rows" instance=ExtResource( 9 )]
+margin_left = 24.0
+margin_top = 25.0
+margin_right = 104.0
+margin_bottom = 49.0
+size_flags_horizontal = 4
+
+[node name="Label" parent="Pause/Menu/Rows/Resume" index="0"]
+text = "Resume"
+
+[node name="Settings" parent="Pause/Menu/Rows" instance=ExtResource( 9 )]
+margin_left = 24.0
+margin_top = 53.0
+margin_right = 104.0
+margin_bottom = 77.0
+size_flags_horizontal = 4
+
+[node name="Label" parent="Pause/Menu/Rows/Settings" index="0"]
+text = "Settings"
+
+[node name="Title" parent="Pause/Menu/Rows" instance=ExtResource( 9 )]
+margin_left = 24.0
+margin_top = 81.0
+margin_right = 104.0
+margin_bottom = 105.0
+size_flags_horizontal = 4
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 10 )
+volume_db = -3.0
+autoplay = true
+bus = "music"
+[connection signal="dead" from="Player" to="." method="_on_Player_dead"]
+[connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
+[connection signal="gameover" from="LightHouse" to="." method="_on_LightHouse_gameover"]
+[connection signal="timeout" from="PirateSpawner" to="." method="_on_PirateSpawner_timeout"]
+[connection signal="pressed" from="Pause/Menu/Rows/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="Pause/Menu/Rows/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="Pause/Menu/Rows/Title" to="." method="_on_Title_pressed"]
+
+[editable path="Pause/Menu/Rows/Resume"]
+
+[editable path="Pause/Menu/Rows/Settings"]

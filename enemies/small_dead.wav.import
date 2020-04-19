@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/small_dead.wav-e5b20fbac5a03a5117fcdc2a118a16a9.sample"
+
+[deps]
+
+source_file="res://enemies/small_dead.wav"
+dest_files=[ "res://.import/small_dead.wav-e5b20fbac5a03a5117fcdc2a118a16a9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

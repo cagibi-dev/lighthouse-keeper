@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://items/SuperPaddles.tscn" type="PackedScene" id=1]
+[ext_resource path="res://items/SuperCannon.gd" type="Script" id=2]
+
+[node name="SuperCannon" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
+frame = 1

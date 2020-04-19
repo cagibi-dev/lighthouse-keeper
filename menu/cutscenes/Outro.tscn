@@ -1,0 +1,134 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://music/outro.ogg" type="AudioStream" id=1]
+[ext_resource path="res://menu/cutscenes/night.png" type="Texture" id=2]
+[ext_resource path="res://menu/cutscenes/pirate_night.png" type="Texture" id=3]
+[ext_resource path="res://menu/cutscenes/Outro.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "waves"
+length = 6.0
+loop = true
+step = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 24.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 4.5, 9, 15.5, 20 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "", "\"Why did you turn off the light?\"", "\"We could not see the stars\", the pirates responded.", "The night sky was now at its best.
+
+You spent hours watching the stars with the pirates.", "Sometimes you have to turn off a small light to keep big lights alive.", "
+
+
+THE END
+thanks for playing!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Background:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 2 ) ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("Music")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 1 )
+} ],
+"times": PoolRealArray( 0.5 )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Background:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 6, 6.5, 11, 20 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Intro" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "music"
+
+[node name="Background" type="Sprite" parent="."]
+self_modulate = Color( 0.0705882, 0.207843, 0.356863, 0 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -3 )
+
+[node name="Label" type="Label" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = 160.0
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Waves" type="AnimationPlayer" parent="Background"]
+autoplay = "waves"
+anims/waves = SubResource( 1 )
+
+[node name="Skip" type="Button" parent="Background"]
+modulate = Color( 0.384314, 0.313726, 0.72549, 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -13.0
+margin_right = -10.0
+margin_bottom = -5.0
+text = "> Back to main menu <"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "cutscene"
+anims/cutscene = SubResource( 2 )
+[connection signal="pressed" from="Background/Skip" to="." method="_on_Skip_pressed"]

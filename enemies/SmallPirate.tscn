@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://enemies/small_pirate.png" type="Texture" id=1]
+[ext_resource path="res://enemies/SmallPirate.gd" type="Script" id=2]
+[ext_resource path="res://world/light.png" type="Texture" id=3]
+[ext_resource path="res://enemies/small_dead.wav" type="AudioStream" id=4]
+[ext_resource path="res://enemies/Explosion.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Animation" id=3]
+resource_name = "default"
+length = 4.0
+loop = true
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 10.0, -10.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Light2D:texture_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.2, 0.25, 0.2, 0.25 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 15, 8 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
+[node name="SmallPirate" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 2 )
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+amount = 10
+lifetime = 2.0
+local_coords = false
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 10.0
+damping = 20.0
+scale_amount = 2.0
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -9 )
+texture = ExtResource( 1 )
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+autoplay = "default"
+anims/default = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, -1 )
+shape = SubResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -2, -10 )
+texture = ExtResource( 3 )
+texture_scale = 0.3
+energy = 0.8
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( -1, -8 )
+shape = SubResource( 2 )
+
+[node name="Dead" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+max_distance = 500.0
+bus = "sfx"
+
+[node name="Explosion" parent="." instance=ExtResource( 5 )]
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://items/SuperPaddles.gd" type="Script" id=1]
+[ext_resource path="res://items/Coin.tscn" type="PackedScene" id=2]
+[ext_resource path="res://items/powerup2.wav" type="AudioStream" id=3]
+
+[node name="SuperPaddles" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( -1, -1 )
+frame = 0
+
+[node name="Caught" parent="." index="4"]
+stream = ExtResource( 3 )
