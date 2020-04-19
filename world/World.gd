@@ -8,6 +8,8 @@ var plus_score = preload("res://items/PlusScore.tscn")
 
 func _ready():
 	Globals.score = 0
+	yield(get_tree().create_timer(5.0), "timeout")
+	Globals.message = "Bigger bullets: aim through lighthouse\nFOR EMERGENCY USE ONLY"
 
 func _physics_process(_delta):
 	if has_node("LightHouse") and has_node("Player"):

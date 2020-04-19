@@ -2,7 +2,7 @@ extends Node
 
 var score := 0 setget set_score
 var high_score := 0
-var message := "Mouse: move      Left click: shoot      Bigger bullets: aim through lighthouse" setget set_message
+var message := "Mouse: move      Left click: shoot" setget set_message
 
 func _ready():
 	OS.window_size = 4*Vector2(256, 144)
