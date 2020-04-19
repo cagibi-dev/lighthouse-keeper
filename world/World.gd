@@ -8,18 +8,21 @@ var plus_score = preload("res://items/PlusScore.tscn")
 
 func _ready():
 	Globals.score = 0
-	yield(get_tree().create_timer(5.0), "timeout")
+	yield(get_tree().create_timer(6.0), "timeout")
 	Globals.message = "Bigger bullets: aim through lighthouse\nFOR EMERGENCY USE ONLY"
 
 func _physics_process(_delta):
 	if has_node("LightHouse") and has_node("Player"):
 		$Camera2D.position = (2*$LightHouse.position + $Player.position)/3
 	
-	#if int($HUD/UI/Score.text) != Globals.score:
-	#	$HUD/UI/Score.text = str(1000000+Globals.score).substr(1)
-	
 	if Globals.message != $HUD/UI/Instructions.text:
 		$HUD/UI/Instructions.text = Globals.message
+
+	if not OS.is_window_focused():
+		$Pause/Menu.show()
+		get_tree().paused = true
+		$Pause/Menu/Rows/Resume.grab_focus()
+
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -30,7 +33,7 @@ func _input(event):
 func _on_Player_shoot(pos, vel, bullet):
 	var my_bullet = bullet.instance()
 	add_child(my_bullet)
-	my_bullet.global_position = pos
+	my_bullet.global_position = pos + 10*vel.normalized()
 	my_bullet.velocity = vel
 
 
@@ -49,8 +52,8 @@ func _on_Player_dead(player: Node2D):
 
 
 func _on_PirateSpawner_timeout():
-	if $PirateSpawner.wait_time > 1:
-		$PirateSpawner.wait_time *= 0.985
+	if $PirateSpawner.wait_time > 0.8:
+		$PirateSpawner.wait_time *= 0.986
 	if has_node("LightHouse"):
 		var my_pirate: Node2D
 		if randi()%20 == 0:
