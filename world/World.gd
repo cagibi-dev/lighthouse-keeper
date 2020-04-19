@@ -19,23 +19,26 @@ func _physics_process(_delta):
 		$HUD/UI/Instructions.text = Globals.message
 
 	if not OS.is_window_focused():
-		$Pause/Menu.show()
-		get_tree().paused = true
-		$Pause/Menu/Rows/Resume.grab_focus()
+		pause_game()
 
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+		pause_game()
+
+func pause_game():
+	$Pause/Menu.show()
+	get_tree().paused = true
+	$Pause/Menu/Rows/Resume.grab_focus()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		$Pause/Menu.show()
-		get_tree().paused = true
-		$Pause/Menu/Rows/Resume.grab_focus()
+		pause_game()
 
 func _on_Player_shoot(pos, vel, bullet):
 	var my_bullet = bullet.instance()
 	add_child(my_bullet)
 	my_bullet.global_position = pos + 10*vel.normalized()
 	my_bullet.velocity = vel
-
 
 func _on_Player_dead(player: Node2D):
 	$Camera2D/Shake.play("screen_shake")

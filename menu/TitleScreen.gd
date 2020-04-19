@@ -6,6 +6,9 @@ func _ready():
 		$HighScore.text = "Highest score: " + str(Globals.high_score)
 	else:
 		$HighScore.text = "Will you protect the light?"
+	
+	if OS.has_feature("HTML5"):
+		$Buttons/Quit.hide()
 
 func _on_Play_pressed():
 	get_tree().change_scene("res://menu/cutscenes/Intro.tscn")
