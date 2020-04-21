@@ -61,15 +61,15 @@ func _on_PirateSpawner_timeout():
 		var my_pirate: Node2D
 		if randi()%20 == 0:
 			my_pirate = big_pirate.instance()
-			assert(OK == my_pirate.connect("shoot", self, "_on_Pirate_shoot"))
+			my_pirate.connect("shoot", self, "_on_Pirate_shoot")
 		elif randi()%15 == 0:
 			my_pirate = chaser.instance()
 			my_pirate.player = $Player
-			assert(OK == $LightHouse.connect("gameover", my_pirate, "_on_GameOver"))
+			$LightHouse.connect("gameover", my_pirate, "_on_GameOver")
 		else:
 			my_pirate = pirate.instance()
 
-		assert(OK == my_pirate.connect("add_score", self, "_on_Pirate_add_score"))
+		my_pirate.connect("add_score", self, "_on_Pirate_add_score")
 		add_child(my_pirate)
 
 		if randi()%2 == 0:
