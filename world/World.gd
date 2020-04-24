@@ -117,7 +117,7 @@ func _on_LightHouse_gameover():
 	$HUD/GameOver.show()
 	$Music.stop()
 	$Player.queue_free()
-	$HUD/GameOverAnim.play("gameover")
+	$HUD/GlobalAnim.play("gameover")
 
 func _on_Resume_pressed():
 	$Pause/Menu.hide()

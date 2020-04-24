@@ -11,6 +11,7 @@
 [ext_resource path="res://menu/CustomButton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://music/level.ogg" type="AudioStream" id=10]
 [ext_resource path="res://menu/ScoreDisplay.tscn" type="PackedScene" id=11]
+[ext_resource path="res://world/Sea.shader" type="Shader" id=12]
 
 [sub_resource type="Animation" id=1]
 resource_name = "screen_shake"
@@ -27,6 +28,11 @@ tracks/0/keys = {
 "values": [ 0.2, -0.2, 0.1, -0.1, 0.0 ]
 }
 
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 12 )
+shader_param/amplitude = Vector2( 0, 10 )
+shader_param/speed = 1.0
+
 [sub_resource type="AnimatedTexture" id=2]
 flags = 2
 frames = 3
@@ -35,41 +41,6 @@ frame_1/texture = ExtResource( 8 )
 frame_1/delay_sec = 0.0
 frame_2/texture = ExtResource( 7 )
 frame_2/delay_sec = 0.0
-
-[sub_resource type="Animation" id=3]
-resource_name = "tides"
-length = 8.0
-loop = true
-step = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:offset")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 4, 6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 10 ), Vector2( 5, 0 ), Vector2( 5, 10 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "start"
-length = 10.0
-step = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 4, 6, 7, 8.5, 10 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.705882, 0.466667, 0.25098, 1 ), Color( 0.756863, 0.0705882, 0, 1 ), Color( 0.407843, 0.0627451, 0.247059, 1 ), Color( 0.109804, 0.0470588, 0.333333, 1 ), Color( 0, 0, 0, 1 ) ]
-}
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 20, 400 )
@@ -108,27 +79,41 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=4]
+resource_name = "start"
+length = 10.0
+step = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:color")
+tracks/0/path = NodePath("../Darkness:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 0.2, 1 ),
+"times": PoolRealArray( 0, 4, 6, 7, 8.5, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.705882, 0.466667, 0.25098, 1 ), Color( 0.756863, 0.0705882, 0, 1 ), Color( 0.407843, 0.0627451, 0.247059, 1 ), Color( 0.109804, 0.0470588, 0.333333, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../../Camera2D:zoom")
+tracks/1/path = NodePath("EntireScreen:color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.2, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0.188235, 0.243137, 0.607843, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 0.2, 1 ),
 "update": 0,
@@ -149,7 +134,6 @@ position = Vector2( 0, 80 )
 position = Vector2( 3, 3 )
 current = true
 smoothing_enabled = true
-offset_h = 0.2
 __meta__ = {
 "_edit_lock_": true
 }
@@ -160,6 +144,7 @@ anims/screen_shake = SubResource( 1 )
 [node name="LightHouse" parent="." instance=ExtResource( 2 )]
 
 [node name="Sea" type="Sprite" parent="."]
+material = SubResource( 9 )
 position = Vector2( -400, -300 )
 z_index = -10
 texture = SubResource( 2 )
@@ -170,18 +155,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sea"]
-autoplay = "tides"
-anims/tides = SubResource( 3 )
-
 [node name="Darkness" type="CanvasModulate" parent="."]
+color = Color( 0.926471, 0.866667, 0.812745, 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="Start" type="AnimationPlayer" parent="Darkness"]
-autoplay = "start"
-anims/start = SubResource( 4 )
 
 [node name="Borders" type="StaticBody2D" parent="."]
 __meta__ = {
@@ -236,20 +214,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameOverAnim" type="AnimationPlayer" parent="HUD"]
+[node name="GlobalAnim" type="AnimationPlayer" parent="HUD"]
+autoplay = "start"
 anims/gameover = SubResource( 7 )
+anims/start = SubResource( 4 )
 
 [node name="EntireScreen" type="ColorRect" parent="HUD"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0 )
+color = Color( 0.188235, 0.243137, 0.607843, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="FadeOut" type="AnimationPlayer" parent="HUD/EntireScreen"]
-autoplay = "FadeOut"
-anims/FadeOut = SubResource( 8 )
 
 [node name="PirateSpawner" type="Timer" parent="."]
 wait_time = 2.5
