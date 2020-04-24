@@ -20,6 +20,7 @@ func hurt():
 		$HitBox.collision_mask = 0
 		call_deferred("drop_item")
 		set_physics_process(false)
+		$Trail.emitting = false
 		emit_signal("add_score", score, global_position)
 		yield(get_tree().create_timer(1.5), "timeout")
 		queue_free()

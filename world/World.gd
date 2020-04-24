@@ -61,15 +61,18 @@ func _on_PirateSpawner_timeout():
 		var my_pirate: Node2D
 		if randi()%20 == 0:
 			my_pirate = big_pirate.instance()
-			my_pirate.connect("shoot", self, "_on_Pirate_shoot")
+			var ok := my_pirate.connect("shoot", self, "_on_Pirate_shoot")
+			assert(OK == ok)
 		elif randi()%15 == 0:
 			my_pirate = chaser.instance()
 			my_pirate.player = $Player
-			$LightHouse.connect("gameover", my_pirate, "_on_GameOver")
+			var ok := $LightHouse.connect("gameover", my_pirate, "_on_GameOver")
+			assert(OK == ok)
 		else:
 			my_pirate = pirate.instance()
 
-		my_pirate.connect("add_score", self, "_on_Pirate_add_score")
+		var ok := my_pirate.connect("add_score", self, "_on_Pirate_add_score")
+		assert(OK == ok)
 		add_child(my_pirate)
 
 		if randi()%2 == 0:
@@ -109,8 +112,10 @@ func _on_Settings_pressed():
 
 func _on_Title_pressed():
 	get_tree().paused = false
-	get_tree().change_scene("res://menu/TitleScreen.tscn")
+	var ok := get_tree().change_scene("res://menu/TitleScreen.tscn")
+	assert(OK == ok)
 
 func goto_outro():
 	get_tree().paused = false
-	get_tree().change_scene("res://menu/cutscenes/Outro.tscn")
+	var ok := get_tree().change_scene("res://menu/cutscenes/Outro.tscn")
+	assert(OK == ok)

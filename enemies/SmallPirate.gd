@@ -43,6 +43,7 @@ func hurt():
 	$HitBox.collision_layer = 0
 	$HitBox.collision_mask = 0
 	set_physics_process(false)
+	$Trail.emitting = false
 	yield(get_tree().create_timer(1.0), "timeout")
 	queue_free()
 

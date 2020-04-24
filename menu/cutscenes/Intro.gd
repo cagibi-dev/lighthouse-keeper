@@ -10,4 +10,5 @@ func _on_Skip_pressed():
 	$Background/Waves.stop()
 	$Go.play("go")
 	yield(get_tree().create_timer(1.0), "timeout")
-	get_tree().change_scene("res://world/World.tscn")
+	var ok := get_tree().change_scene("res://world/World.tscn")
+	assert(OK == ok)
