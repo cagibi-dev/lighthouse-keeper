@@ -1,10 +1,16 @@
 extends YSort
 
-var pirate = preload("res://enemies/SmallPirate.tscn")
-var big_pirate = preload("res://enemies/BigPirate.tscn")
-var chaser = preload("res://enemies/Chaser.tscn")
+var pirate := preload("res://enemies/SmallPirate.tscn")
+var big_pirate := preload("res://enemies/BigPirate.tscn")
+var chaser := preload("res://enemies/Chaser.tscn")
 
-var plus_score = preload("res://items/PlusScore.tscn")
+var plus_score := preload("res://items/PlusScore.tscn")
+var items := [
+	preload("res://items/Coin.tscn"),
+	preload("res://items/LifeBarrel.tscn"),
+	preload("res://items/SuperCannon.tscn"),
+	preload("res://items/SuperPaddles.tscn"),
+]
 
 func _ready():
 	Globals.score = 0
@@ -73,6 +79,8 @@ func _on_PirateSpawner_timeout():
 
 		var ok := my_pirate.connect("add_score", self, "_on_Pirate_add_score")
 		assert(OK == ok)
+		ok = my_pirate.connect("drop_item", self, "_on_Pirate_drop_item")
+		assert(OK == ok)
 		add_child(my_pirate)
 
 		if randi()%2 == 0:
@@ -92,10 +100,19 @@ func _on_Pirate_shoot(pos: Vector2, bullet):
 
 func _on_Pirate_add_score(score: int, pos: Vector2):
 	Globals.score += score
-	var new_plus_score = plus_score.instance()
+	var new_plus_score: Node2D = plus_score.instance()
 	add_child(new_plus_score)
 	new_plus_score.global_position = pos
 	new_plus_score.init(score)
+
+func _on_Pirate_drop_item(pos: Vector2):
+	# Drop an item at random on pirate's death.
+	var item: PackedScene = items[randi()%items.size()]
+	call_deferred("_deferred_drop_item", item.instance(), pos)
+
+func _deferred_drop_item(item: Node2D, pos: Vector2):
+	add_child(item)
+	item.global_position = pos
 
 func _on_LightHouse_gameover():
 	$HUD/GameOver.show()

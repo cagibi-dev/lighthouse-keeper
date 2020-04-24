@@ -1,8 +1,8 @@
 extends Area2D
 
-var velocity = Vector2.ZERO
+var velocity := Vector2.ZERO
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	position += velocity * delta
 
 func _on_VisibilityNotifier2D_screen_exited():
@@ -18,5 +18,5 @@ func hurt():
 	yield(get_tree().create_timer(1.0), "timeout")
 	queue_free()
 
-func _on_area_entered(_area):
+func _on_area_entered(_area: Area2D):
 	hurt()
