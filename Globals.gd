@@ -15,7 +15,7 @@ func set_message(msg: String):
 		yield(get_tree().create_timer(0.1), "timeout")
 		message = message.substr(1)
 
-func set_score(new_score):
+func set_score(new_score: int):
 	if new_score >= high_score:
 		if score < high_score and high_score > 0:
 			set_message("New record! Previous highest score was " + str(high_score))

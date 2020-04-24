@@ -1,9 +1,9 @@
 extends Area2D
 
-var velocity = Vector2.ZERO
-var invincible = false
+var velocity := Vector2.ZERO
+var invincible := false
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	position += velocity * delta
 
 func destroy():

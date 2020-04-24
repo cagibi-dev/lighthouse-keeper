@@ -1,8 +1,8 @@
 extends Area2D
 
-var plus_score = preload("res://items/PlusScore.tscn")
+var plus_score := preload("res://items/PlusScore.tscn")
 
-func _on_Coin_body_entered(body):
+func _on_Coin_body_entered(body: PhysicsBody2D):
 	effect(body)
 	destroy()
 

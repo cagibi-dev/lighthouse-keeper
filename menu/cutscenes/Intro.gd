@@ -1,6 +1,6 @@
 extends Node2D
 
-func _input(event):
+func _input(event: InputEvent):
 	if event.is_action_pressed("shoot") or event.is_action_pressed("ui_accept"):
 		_on_Skip_pressed()
 

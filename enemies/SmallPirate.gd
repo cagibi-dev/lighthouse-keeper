@@ -9,14 +9,14 @@ export (int) var rareness := 1
 var velocity := Vector2.ZERO
 
 func _physics_process(delta):
+	if velocity.length() > max_speed:
+		velocity = velocity.normalized() * (velocity.length() - 30 * delta)
+	velocity = move_and_slide(velocity)
+	
 	if velocity.x != 0:
 		$Sprite.flip_h = velocity.x > 0
 	if velocity.y != 0:
 		$Sprite.frame = 1 if velocity.y < 0 else 0
-	
-	if velocity.length() > max_speed:
-		velocity = velocity.normalized() * (velocity.length() - 30 * delta)
-	velocity = move_and_slide(velocity)
 	
 	if abs(position.x) > 381:
 		queue_free()
@@ -34,7 +34,6 @@ func hurt():
 	emit_signal("add_score", score, global_position)
 	if randi()%50 < rareness:
 		emit_signal("drop_item", global_position)
-	collision_layer = 0
 	$HitBox.collision_layer = 0
 	$HitBox.collision_mask = 0
 	set_physics_process(false)

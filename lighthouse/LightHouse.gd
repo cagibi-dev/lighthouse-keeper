@@ -2,7 +2,7 @@ extends Area2D
 
 signal gameover
 
-var life = 100
+var life := 100
 
 func _process(_delta):
 	$LifeBar.value = life
@@ -19,17 +19,15 @@ func _process(_delta):
 		$Sprite.frame = 0
 
 
-func _on_area_entered(area):
+func _on_area_entered(area: CollisionObject2D):
 	if area.has_method("hurt"):
 		area.hurt()
 	life -= 9
 	$LifeBar/AnimationPlayer.play("badflicker")
 
-
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(anim_name: String):
 	if anim_name == "badflicker":
 		$LifeBar/AnimationPlayer.play("flicker")
-
 
 func _on_BulletBooster_area_entered(area: Area2D):
 	area.scale *= 3
