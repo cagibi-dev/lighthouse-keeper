@@ -4,12 +4,12 @@
 [ext_resource path="res://world/Current.gd" type="Script" id=2]
 [ext_resource path="res://world/Sea.shader" type="Shader" id=3]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
 shader_param/amplitude = Vector2( 0, 10 )
 shader_param/speed = 1.0
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 length = 0.6
 loop = true
 step = 0.2
@@ -30,7 +30,7 @@ tracks/0/keys = {
 extents = Vector2( 60, 15 )
 
 [node name="Current" type="Area2D"]
-material = SubResource( 4 )
+material = SubResource( 1 )
 monitorable = false
 collision_layer = 0
 collision_mask = 10
@@ -41,11 +41,10 @@ use_parent_material = true
 z_index = -9
 texture = ExtResource( 1 )
 vframes = 3
-frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "flow"
-anims/flow = SubResource( 5 )
+anims/flow = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )

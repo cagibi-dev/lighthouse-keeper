@@ -49,6 +49,7 @@ func _physics_process(_delta: float):
 func shoot(vel: Vector2):
 	if can_shoot:
 		can_shoot = false
+		$ShootLine.region_rect.position.y = 16.0
 		$Shoot/Timer.start()
 		$Shoot.play()
 		emit_signal("shoot", global_position, vel, bullet)
@@ -64,6 +65,7 @@ func _on_HitBox_area_entered(_area: CollisionObject2D):
 
 func _on_Timer_timeout():
 	can_shoot = true
+	$ShootLine.region_rect.position.y = 0.0
 
 func _on_HurtTimer_timeout():
 	vulnerable = true

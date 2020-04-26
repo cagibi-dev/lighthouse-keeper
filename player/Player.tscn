@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/player.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
 [ext_resource path="res://world/light.png" type="Texture" id=3]
 [ext_resource path="res://player/cannon.wav" type="AudioStream" id=5]
 [ext_resource path="res://player/hurt.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/arrow.png" type="Texture" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 1
@@ -114,13 +113,15 @@ material = SubResource( 1 )
 position = Vector2( 0, -8 )
 rotation = -0.174533
 texture = ExtResource( 1 )
-hframes = 2
+hframes = 4
 
 [node name="ShootLine" type="Sprite" parent="."]
 material = SubResource( 2 )
 position = Vector2( 0, -5 )
-texture = ExtResource( 7 )
+texture = ExtResource( 1 )
 offset = Vector2( 36, 0 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 48, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -2 )

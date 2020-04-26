@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://menu/settings_background.png" type="Texture" id=1]
+[ext_resource path="res://menu/backgrounds.png" type="Texture" id=1]
 [ext_resource path="res://menu/CustomButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://menu/Settings.gd" type="Script" id=3]
 [ext_resource path="res://items/coin.wav" type="AudioStream" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 256, 0, 256, 144 )
 
 [node name="Settings" type="CanvasLayer"]
 pause_mode = 2
@@ -13,7 +17,7 @@ script = ExtResource( 3 )
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 1 )
+texture = SubResource( 1 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false

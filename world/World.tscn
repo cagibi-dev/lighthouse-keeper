@@ -1,17 +1,14 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://lighthouse/LightHouse.tscn" type="PackedScene" id=2]
-[ext_resource path="res://world/sea.png" type="Texture" id=3]
+[ext_resource path="res://world/sea_background.png" type="Texture" id=3]
 [ext_resource path="res://world/World.gd" type="Script" id=4]
 [ext_resource path="res://world/Current.tscn" type="PackedScene" id=5]
 [ext_resource path="res://menu/gameover.png" type="Texture" id=6]
-[ext_resource path="res://world/sea3.png" type="Texture" id=7]
-[ext_resource path="res://world/sea2.png" type="Texture" id=8]
 [ext_resource path="res://menu/CustomButton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://music/level.ogg" type="AudioStream" id=10]
 [ext_resource path="res://menu/ScoreDisplay.tscn" type="PackedScene" id=11]
-[ext_resource path="res://world/Sea.shader" type="Shader" id=12]
 
 [sub_resource type="Animation" id=1]
 resource_name = "screen_shake"
@@ -28,27 +25,35 @@ tracks/0/keys = {
 "values": [ 0.2, -0.2, 0.1, -0.1, 0.0 ]
 }
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = ExtResource( 12 )
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+uniform vec2 amplitude = vec2(0.0, 10.0);
+uniform float speed = 1.0;
+
+uniform float nb_sprites = 3;
+uniform float height_sprites = 64;
+
+void vertex() {
+  // Animate Sprite moving in big circle around its location
+  VERTEX += vec2(cos(TIME*speed)*amplitude.x, sin(TIME*speed)*amplitude.y);
+  VERTEX.y += height_sprites*floor(nb_sprites*mod(TIME, 1));
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 8 )
 shader_param/amplitude = Vector2( 0, 10 )
 shader_param/speed = 1.0
+shader_param/nb_sprites = 3.0
+shader_param/height_sprites = 64.0
 
-[sub_resource type="AnimatedTexture" id=2]
-flags = 2
-frames = 3
-frame_0/texture = ExtResource( 3 )
-frame_1/texture = ExtResource( 8 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 7 )
-frame_2/delay_sec = 0.0
-
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 20, 400 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 600, 20 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "gameover"
 length = 3.0
 step = 0.2
@@ -79,8 +84,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "start"
+[sub_resource type="Animation" id=7]
 length = 10.0
 step = 0.5
 tracks/0/type = "value"
@@ -144,13 +148,11 @@ anims/screen_shake = SubResource( 1 )
 [node name="LightHouse" parent="." instance=ExtResource( 2 )]
 
 [node name="Sea" type="Sprite" parent="."]
-material = SubResource( 9 )
-position = Vector2( -400, -300 )
+material = SubResource( 2 )
 z_index = -10
-texture = SubResource( 2 )
-centered = false
+texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 800, 600 )
+region_rect = Rect2( 0, 0, 1200, 800 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -168,19 +170,19 @@ __meta__ = {
 
 [node name="Left" type="CollisionShape2D" parent="Borders"]
 position = Vector2( -422, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Right" type="CollisionShape2D" parent="Borders"]
 position = Vector2( 422, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Top" type="CollisionShape2D" parent="Borders"]
 position = Vector2( 0, -250 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="Bottom" type="CollisionShape2D" parent="Borders"]
 position = Vector2( 0, 250 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -216,8 +218,8 @@ __meta__ = {
 
 [node name="GlobalAnim" type="AnimationPlayer" parent="HUD"]
 autoplay = "start"
-anims/gameover = SubResource( 7 )
-anims/start = SubResource( 4 )
+anims/gameover = SubResource( 6 )
+anims/start = SubResource( 7 )
 
 [node name="EntireScreen" type="ColorRect" parent="HUD"]
 anchor_right = 1.0
