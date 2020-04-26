@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lifebar.png-d05db812bb281b2eeb21a224cf4ee59f.stex"
+path="res://.import/health_bar.png-3f4ab8bbd7d9666bed9356ec2b31b12d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lighthouse/lifebar.png"
-dest_files=[ "res://.import/lifebar.png-d05db812bb281b2eeb21a224cf4ee59f.stex" ]
+source_file="res://lighthouse/health_bar.png"
+dest_files=[ "res://.import/health_bar.png-3f4ab8bbd7d9666bed9356ec2b31b12d.stex" ]
 
 [params]
 
