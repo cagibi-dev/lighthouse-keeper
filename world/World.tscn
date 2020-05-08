@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ 0.2, -0.2, 0.1, -0.1, 0.0 ]
 }
 
-[sub_resource type="Shader" id=8]
+[sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
 uniform vec2 amplitude = vec2(0.0, 10.0);
@@ -40,8 +40,8 @@ void vertex() {
   VERTEX.y += height_sprites*floor(nb_sprites*mod(TIME, 1));
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
 shader_param/amplitude = Vector2( 0, 10 )
 shader_param/speed = 1.0
 shader_param/nb_sprites = 3.0
@@ -148,7 +148,7 @@ anims/screen_shake = SubResource( 1 )
 [node name="LightHouse" parent="." instance=ExtResource( 2 )]
 
 [node name="Sea" type="Sprite" parent="."]
-material = SubResource( 2 )
+material = SubResource( 3 )
 z_index = -10
 texture = ExtResource( 3 )
 region_enabled = true
