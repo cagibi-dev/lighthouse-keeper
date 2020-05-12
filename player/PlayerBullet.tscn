@@ -52,4 +52,9 @@ energy = 0.8
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 0, -6 )
 rect = Rect2( -20, -20, 40, 40 )
+
+[node name="DeadTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_DeadTimer_timeout"]
