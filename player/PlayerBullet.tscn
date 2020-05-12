@@ -46,7 +46,7 @@ shape = SubResource( 4 )
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, -12 )
 texture = ExtResource( 3 )
-texture_scale = 0.12
+texture_scale = 0.03
 energy = 0.8
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]

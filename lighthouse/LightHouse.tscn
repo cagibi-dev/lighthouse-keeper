@@ -11,16 +11,15 @@
 blend_mode = 1
 light_mode = 1
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 32, 128, 32 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 128, 32 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "badflicker"
+[sub_resource type="Animation" id=4]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -47,8 +46,7 @@ tracks/1/keys = {
 "values": [ Vector2( 3, 3 ), Vector2( -3, -3 ), Vector2( 2, 2 ), Vector2( -2, -2 ), Vector2( 1, 1 ), Vector2( -1, -1 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "flicker"
+[sub_resource type="Animation" id=5]
 length = 5.0
 loop = true
 tracks/0/type = "value"
@@ -64,7 +62,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.47451, 0.105882, 0.105882, 1 ), Color( 1, 1, 1, 1 ), Color( 0.713726, 0.607843, 0.196078, 1 ), Color( 1, 1, 1, 1 ), Color( 0.47451, 0.105882, 0.105882, 1 ), Color( 1, 1, 1, 1 ), Color( 0.713726, 0.607843, 0.196078, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=6]
 resource_name = "anim"
 length = 16.0
 loop = true
@@ -94,8 +92,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.572549, 0.572549, 0.945098, 0.572549 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "start"
+[sub_resource type="Animation" id=7]
 length = 6.0
 step = 1.0
 tracks/0/type = "value"
@@ -123,16 +120,16 @@ tracks/1/keys = {
 "values": [ 0.0, 0.0, 0.5 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 22, 12 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 20, 8 )
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=10]
 radius = 16.0
 
-[sub_resource type="CanvasItemMaterial" id=10]
+[sub_resource type="CanvasItemMaterial" id=11]
 blend_mode = 1
 
 [node name="LightHouse" type="Area2D"]
@@ -151,21 +148,23 @@ margin_top = -46.0
 margin_right = 64.0
 margin_bottom = -14.0
 value = 100.0
-texture_over = SubResource( 8 )
-texture_progress = SubResource( 9 )
+texture_over = SubResource( 2 )
+texture_progress = SubResource( 3 )
 fill_mode = 6
+tint_over = Color( 0.333333, 0.333333, 1, 0.333333 )
+tint_progress = Color( 0.857516, 0.857516, 0.981699, 0.857516 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LifeBar"]
 autoplay = "flicker"
-anims/badflicker = SubResource( 2 )
-anims/flicker = SubResource( 3 )
+anims/badflicker = SubResource( 4 )
+anims/flicker = SubResource( 5 )
 
 [node name="LongFlickerAnim" type="AnimationPlayer" parent="LifeBar"]
 autoplay = "anim"
-anims/anim = SubResource( 11 )
+anims/anim = SubResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 2, -20 )
@@ -177,17 +176,17 @@ __meta__ = {
 
 [node name="Start" type="AnimationPlayer" parent="Sprite"]
 autoplay = "start"
-anims/start = SubResource( 4 )
+anims/start = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
-shape = SubResource( 5 )
+shape = SubResource( 8 )
 
 [node name="SmallLight" type="Light2D" parent="."]
 position = Vector2( 0, -32 )
 texture = ExtResource( 1 )
 texture_scale = 0.6
-energy = 0.0
+energy = 0.8
 __meta__ = {
 "_edit_lock_": true
 }
@@ -196,7 +195,7 @@ __meta__ = {
 position = Vector2( 0, -32 )
 texture = ExtResource( 1 )
 texture_scale = 1.2
-energy = 0.0
+energy = 0.5
 __meta__ = {
 "_edit_lock_": true
 }
@@ -206,7 +205,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Rock"]
 position = Vector2( 0, 2 )
-shape = SubResource( 6 )
+shape = SubResource( 9 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -221,14 +220,14 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletBooster"]
-shape = SubResource( 7 )
+shape = SubResource( 10 )
 
 [node name="Flame" type="AudioStreamPlayer2D" parent="BulletBooster"]
 stream = ExtResource( 4 )
 bus = "sfx"
 
 [node name="BeamEffectLeft" type="CPUParticles2D" parent="BulletBooster"]
-material = SubResource( 10 )
+material = SubResource( 11 )
 z_index = -1
 amount = 1
 lifetime_randomness = 0.5
@@ -243,7 +242,7 @@ scale_amount = 2.0
 color = Color( 0.364706, 0.141176, 0.545098, 1 )
 
 [node name="BeamEffectRight" type="CPUParticles2D" parent="BulletBooster"]
-material = SubResource( 10 )
+material = SubResource( 11 )
 z_index = -1
 amount = 1
 lifetime_randomness = 0.5

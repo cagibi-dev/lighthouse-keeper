@@ -60,7 +60,7 @@ func _on_Player_dead(player: Node2D):
 		$LightHouse/Respawn.play()
 
 func _on_PirateSpawner_timeout():
-	if $PirateSpawner.wait_time > 0.8:
+	if $PirateSpawner.wait_time > 0.75:
 		$PirateSpawner.wait_time *= 0.986
 	if has_node("LightHouse"):
 		var my_pirate: Node2D

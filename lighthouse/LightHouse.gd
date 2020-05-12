@@ -6,8 +6,8 @@ var life := 100
 
 func _process(_delta):
 	$LifeBar.value = life
-	$BigLight.texture_scale = 0.1 + (1.5 * life/100)
-	$SmallLight.texture_scale = 0.1 + (0.9 * life/100)
+	$BigLight.texture_scale = 0.025 + (1.5 * life/400)
+	$SmallLight.texture_scale = 0.025 + (0.9 * life/400)
 	if life <= 0:
 		emit_signal("gameover")
 		queue_free()
