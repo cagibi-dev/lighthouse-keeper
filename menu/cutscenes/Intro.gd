@@ -1,6 +1,6 @@
 extends Node2D
 
-func _input(event):
+func _input(event: InputEvent):
 	if event.is_action_pressed("shoot") or event.is_action_pressed("ui_accept"):
 		_on_Skip_pressed()
 
@@ -10,4 +10,5 @@ func _on_Skip_pressed():
 	$Background/Waves.stop()
 	$Go.play("go")
 	yield(get_tree().create_timer(1.0), "timeout")
-	get_tree().change_scene("res://world/World.tscn")
+	var ok := get_tree().change_scene("res://world/World.tscn")
+	assert(OK == ok)

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lifebar.png-d05db812bb281b2eeb21a224cf4ee59f.stex"
+path="res://.import/backgrounds.png-69801ab8bc16191d7a823937f1a093c7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lighthouse/lifebar.png"
-dest_files=[ "res://.import/lifebar.png-d05db812bb281b2eeb21a224cf4ee59f.stex" ]
+source_file="res://menu/backgrounds.png"
+dest_files=[ "res://.import/backgrounds.png-69801ab8bc16191d7a823937f1a093c7.stex" ]
 
 [params]
 

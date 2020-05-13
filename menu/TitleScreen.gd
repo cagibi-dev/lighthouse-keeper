@@ -11,7 +11,8 @@ func _ready():
 		$Buttons/Quit.hide()
 
 func _on_Play_pressed():
-	get_tree().change_scene("res://menu/cutscenes/Intro.tscn")
+	var ok := get_tree().change_scene("res://menu/cutscenes/Intro.tscn")
+	assert(OK == ok)
 
 func _on_Settings_pressed():
 	Settings.get_node("Background").show()

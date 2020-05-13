@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sea3.png-e7f1070c6f352e6193118fa6372a1ceb.stex"
+path="res://.import/beam.png-817491d648fd47203c68688caa44993e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/sea3.png"
-dest_files=[ "res://.import/sea3.png-e7f1070c6f352e6193118fa6372a1ceb.stex" ]
+source_file="res://lighthouse/beam.png"
+dest_files=[ "res://.import/beam.png-817491d648fd47203c68688caa44993e.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

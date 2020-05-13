@@ -58,12 +58,12 @@ anims/default = SubResource( 2 )
 
 [node name="SmallLight" type="Light2D" parent="."]
 texture = ExtResource( 1 )
-texture_scale = 0.15
+texture_scale = 0.04
 energy = 0.8
 
 [node name="BigLight" type="Light2D" parent="."]
 texture = ExtResource( 1 )
-texture_scale = 0.25
+texture_scale = 0.06
 energy = 0.5
 
 [node name="Caught" type="AudioStreamPlayer2D" parent="."]

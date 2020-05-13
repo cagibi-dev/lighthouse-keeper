@@ -1,20 +1,20 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://player/bullet.png" type="Texture" id=1]
+[ext_resource path="res://player/player.png" type="Texture" id=1]
 [ext_resource path="res://player/PlayerBullet.gd" type="Script" id=2]
 [ext_resource path="res://world/light.png" type="Texture" id=3]
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=1]
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
 light_mode = 1
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0, 0.463576, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 0.727417, 0.207031, 1, 0.454916, 0.221008, 0.832031, 1 )
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=4]
 
 [node name="PlayerBullet" type="Area2D"]
 collision_layer = 4
@@ -22,32 +22,39 @@ collision_mask = 8
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( 0, -8 )
 texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 112, 0, 16, 24 )
 
 [node name="Trail" type="CPUParticles2D" parent="Sprite"]
 show_behind_parent = true
-material = SubResource( 3 )
+material = SubResource( 2 )
 position = Vector2( 0, -4 )
 amount = 10
 lifetime = 0.5
 local_coords = false
 gravity = Vector2( 0, 0 )
 scale_amount = 4.0
-color_ramp = SubResource( 4 )
+color_ramp = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -12 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, -12 )
 texture = ExtResource( 3 )
-texture_scale = 0.12
+texture_scale = 0.03
 energy = 0.8
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 0, -6 )
 rect = Rect2( -20, -20, 40, 40 )
+
+[node name="DeadTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_DeadTimer_timeout"]

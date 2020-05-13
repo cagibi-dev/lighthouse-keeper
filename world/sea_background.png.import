@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow.png-0f08de2aff7713893d085b9d32b49dd7.stex"
+path="res://.import/sea_background.png-970cf724b7d71f50947a67a5d187a94b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/arrow.png"
-dest_files=[ "res://.import/arrow.png-0f08de2aff7713893d085b9d32b49dd7.stex" ]
+source_file="res://world/sea_background.png"
+dest_files=[ "res://.import/sea_background.png-970cf724b7d71f50947a67a5d187a94b.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

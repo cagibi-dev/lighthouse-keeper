@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://music/intro.ogg" type="AudioStream" id=1]
-[ext_resource path="res://menu/cutscenes/sunset_character.png" type="Texture" id=2]
-[ext_resource path="res://menu/cutscenes/sunset.png" type="Texture" id=3]
-[ext_resource path="res://menu/cutscenes/pirates.png" type="Texture" id=4]
 [ext_resource path="res://menu/cutscenes/Intro.gd" type="Script" id=5]
 [ext_resource path="res://menu/cutscenes/accept.wav" type="AudioStream" id=6]
+[ext_resource path="res://menu/backgrounds.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "waves"
@@ -47,25 +45,13 @@ The only one in the ocean.
 Each night, shadow pirates come to turn it off... will they succeed this time?
 ", "Good luck." ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Background:texture")
+tracks/1/type = "audio"
+tracks/1/path = NodePath("Music")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 5.5, 10 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
-}
-tracks/2/type = "audio"
-tracks/2/path = NodePath("Music")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -73,29 +59,41 @@ tracks/2/keys = {
 } ],
 "times": PoolRealArray( 2 )
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Background:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
+tracks/2/type = "value"
+tracks/2/path = NodePath("Background:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0, 1.5, 5, 5.5, 6, 9, 10, 11, 17.5, 18 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0705882, 0.207843, 0.356863, 0 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Background/Skip:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "> Click here to skip <", "> Click here to start <" ]
+}
 tracks/4/type = "value"
-tracks/4/path = NodePath("Background/Skip:text")
+tracks/4/path = NodePath("Background:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 18 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 5.5, 10 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ "> Click here to skip <", "> Click here to start <" ]
+"values": [ 2, 3, 4 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -151,9 +149,12 @@ bus = "music"
 
 [node name="Background" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 centered = false
 offset = Vector2( 0, -5 )
+vframes = 4
+hframes = 2
+frame = 4
 
 [node name="Label" type="Label" parent="Background"]
 anchor_right = 1.0
@@ -162,6 +163,12 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = 160.0
+text = "You live in a lighthouse.
+
+The only one in the ocean.
+
+Each night, shadow pirates come to turn it off... will they succeed this time?
+"
 align = 1
 autowrap = true
 __meta__ = {
