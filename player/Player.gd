@@ -51,6 +51,8 @@ func shoot(vel: Vector2):
 		can_shoot = false
 		$ShootLine.region_rect.position.y = 16.0
 		$Shoot/Timer.start()
+		$CooldownBar/AnimationPlayer.playback_speed = 1.0 / $Shoot/Timer.wait_time
+		$CooldownBar/AnimationPlayer.play("charge")
 		$Shoot.play()
 		emit_signal("shoot", global_position, vel, bullet)
 		velocity -= vel
