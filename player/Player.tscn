@@ -1,12 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://player/player.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
 [ext_resource path="res://world/light.png" type="Texture" id=3]
-[ext_resource path="res://player/cooldown_bar/recharging_flat_box.tres" type="StyleBox" id=4]
 [ext_resource path="res://player/cannon.wav" type="AudioStream" id=5]
 [ext_resource path="res://player/hurt.wav" type="AudioStream" id=6]
-[ext_resource path="res://player/cooldown_bar/background_flat_box.tres" type="StyleBox" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 1
@@ -106,6 +104,17 @@ tracks/0/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="CanvasItemMaterial" id=11]
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 32, 64, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 32, 64, 16 )
+
 [sub_resource type="Animation" id=8]
 resource_name = "charge"
 tracks/0/type = "value"
@@ -142,6 +151,7 @@ material = SubResource( 1 )
 position = Vector2( 0, -8 )
 rotation = -0.174533
 texture = ExtResource( 1 )
+vframes = 2
 hframes = 4
 
 [node name="ShootLine" type="Sprite" parent="."]
@@ -159,7 +169,7 @@ shape = SubResource( 3 )
 [node name="SmallLight" type="Light2D" parent="."]
 position = Vector2( 0, -4 )
 texture = ExtResource( 3 )
-texture_scale = 0.25
+texture_scale = 0.06
 energy = 0.8
 
 [node name="Start" type="AnimationPlayer" parent="SmallLight"]
@@ -169,7 +179,7 @@ anims/start = SubResource( 4 )
 [node name="BigLight" type="Light2D" parent="."]
 position = Vector2( 0, -4 )
 texture = ExtResource( 3 )
-texture_scale = 0.4
+texture_scale = 0.1
 energy = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -215,15 +225,16 @@ autostart = true
 [node name="Immune" type="AnimationPlayer" parent="."]
 anims/immune = SubResource( 7 )
 
-[node name="CooldownBar" type="ProgressBar" parent="."]
+[node name="CooldownBar" type="TextureProgress" parent="."]
 visible = false
+material = SubResource( 11 )
 margin_left = -32.0
 margin_top = 7.0
 margin_right = 32.0
 margin_bottom = 15.0
-custom_styles/fg = ExtResource( 4 )
-custom_styles/bg = ExtResource( 7 )
-percent_visible = false
+value = 100.0
+texture_under = SubResource( 9 )
+texture_progress = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
