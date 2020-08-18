@@ -10,3 +10,6 @@ func _on_Skip_pressed():
 	yield(get_tree().create_timer(1.0), "timeout")
 	var ok := get_tree().change_scene("res://menu/TitleScreen.tscn")
 	assert(OK == ok)
+
+func show_score():
+	$Background/Label.text += "\n\nScore: " + str(Globals.score)

@@ -223,8 +223,6 @@ margin_right = 32.0
 margin_bottom = 15.0
 custom_styles/fg = ExtResource( 4 )
 custom_styles/bg = ExtResource( 7 )
-max_value = 100.0
-value = 100.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
